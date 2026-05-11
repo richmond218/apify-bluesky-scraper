@@ -1,0 +1,26 @@
+{
+  "name": "apify-bluesky-scraper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Apify Actor that scrapes Bluesky posts via the AT Protocol public API. Search by query or by user handle, with optional Claude-powered sentiment/topic/entity enrichment.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "apify": "^3.4.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "title": "Bluesky Posts & Profiles Scraper input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "mode": {
+      "title": "Mode",
+      "type": "string",
+      "description": "What to scrape.",
+      "editor": "select",
+      "enum": ["search", "author_feed"],
+      "enumTitles": ["Search posts by query", "Scrape posts from specific authors"],
+      "default": "search"
+    },
+    "search_query": {
+      "title": "Search query",
+      "type": "string",
+      "description": "Query for Bluesky's searchPosts (supports OR, quotes, hashtags). Required when mode='search'.",
+      "editor": "textfield",
+      "example": "climate change OR climatechange"
+    },
+    "sort": {
+      "title": "Sort order (search mode)",
+      "type": "string",
+      "editor": "select",
+      "enum": ["latest", "top"],
+      "enumTitles": ["Latest first", "Top engagement"],
+      "default": "latest"
+    },
+    "language": {
+      "title": "Language filter (BCP-47)",
+      "type": "string",
+      "description": "Limit search to posts in this language (e.g. 'en', 'es', 'ja'). Leave empty for all languages.",
+      "editor": "textfield"
+    },
+    "since": {
+      "title": "Posts since (ISO datetime, search mode)",
+      "type": "string",
+      "description": "Only include posts after this datetime, e.g. 2026-05-01T00:00:00Z",
+      "editor": "textfield"
+    },
+    "until": {
+      "title": "Posts until (ISO datetime, search mode)",
+      "type": "string",
+      "description": "Only include posts before this datetime.",
+      "editor": "textfield"
+    },
+    "actors": {
+      "title": "Bluesky handles or DIDs",
+      "type": "array",
+      "description": "Required when mode='author_feed'. One handle per row (without @).",
+      "editor": "stringList",
+      "default": [],
+      "example": ["bsky.app", "atproto.com"]
+    },
+    "author_filter": {
+      "title": "Author-feed filter",
+      "type": "string",
+      "editor": "select",
+      "enum": [
+        "posts_with_replies",
+        "posts_no_replies",
+        "posts_with_media",
+        "posts_and_author_threads"
+      ],
+      "enumTitles": [
+        "All posts including replies",
+        "Top-level posts only (no replies)",
+        "Posts with media",
+        "Posts + author's own threads"
+      ],
+      "default": "posts_with_replies"
+    },
+    "max_items": {
+      "title": "Max posts total",
+      "type": "integer",
+      "description": "Hard cap across all queries/actors. Default 100. Set higher for bigger runs.",
+      "default": 100,
+      "minimum": 1,
+      "maximum": 50000
+    },
+    "max_items_per_actor": {
+      "title": "Max posts per actor (author_feed mode)",
+      "type": "integer",
+      "default": 100,
+      "minimum": 1,
+      "maximum": 5000
+    },
+    "enrich_with_claude": {
+      "title": "Enrich with Claude (sentiment / topics / entities / summary)",
+      "type": "boolean",
+      "description": "Adds a `semantic` field to each output post. Requires an Anthropic Claude API key.",
+      "default": false
+    },
+    "claude_api_key": {
+      "title": "Anthropic API key (required if enrichment ON)",
+      "type": "string",
+      "description": "Starts with sk-ant-... Get one at console.anthropic.com.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "claude_model": {
+      "title": "Claude model",
+      "type": "string",
+      "editor": "select",
+      "enum": ["claude-haiku-4-5", "claude-sonnet-4-6", "claude-opus-4-7"],
+      "enumTitles": [
+        "Haiku 4.5 (fastest, cheapest)",
+        "Sonnet 4.6 (balanced)",
+        "Opus 4.7 (highest quality)"
+      ],
+      "default": "claude-haiku-4-5"
+    },
+    "enrichment_fields": {
+      "title": "Which enrichment fields to compute",
+      "type": "object",
+      "description": "Cost scales with fields enabled. Sentiment + topics is cheapest.",
+      "editor": "json",
+      "default": {
+        "sentiment": true,
+        "topics": true,
+        "entities": false,
+        "summary": false
+      }
+    }
+  },
+  "required": ["mode"]
+}

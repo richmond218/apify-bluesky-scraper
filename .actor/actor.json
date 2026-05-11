@@ -1,0 +1,47 @@
+{
+  "actorSpecification": 1,
+  "name": "apify-bluesky-scraper",
+  "version": "0.1",
+  "buildTag": "latest",
+  "title": "Bluesky Posts & Profiles Scraper",
+  "description": "Scrape Bluesky posts via the AT Protocol public API. Search by query or fetch posts from a list of user handles. Optional Claude-powered sentiment/topic/entity enrichment.",
+  "categories": ["SOCIAL_MEDIA", "MARKETING", "DEVELOPER_TOOLS"],
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "fields": {},
+      "views": {
+        "overview": {
+          "title": "Overview",
+          "transformation": {
+            "fields": [
+              "author_handle",
+              "text",
+              "like_count",
+              "repost_count",
+              "reply_count",
+              "created_at",
+              "url"
+            ]
+          },
+          "display": {
+            "component": "table",
+            "properties": {
+              "author_handle": { "label": "Author", "format": "text" },
+              "text": { "label": "Post", "format": "text" },
+              "like_count": { "label": "Likes", "format": "number" },
+              "repost_count": { "label": "Reposts", "format": "number" },
+              "reply_count": { "label": "Replies", "format": "number" },
+              "created_at": { "label": "Posted", "format": "date" },
+              "url": { "label": "URL", "format": "link" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "minMemoryMbytes": 256,
+  "maxMemoryMbytes": 1024,
+  "dockerfile": "./Dockerfile"
+}

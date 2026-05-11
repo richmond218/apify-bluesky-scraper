@@ -22,6 +22,7 @@
     "sort": {
       "title": "Sort order (search mode)",
       "type": "string",
+      "description": "How to rank results when mode='search'. 'latest' returns newest first; 'top' returns highest-engagement first.",
       "editor": "select",
       "enum": ["latest", "top"],
       "enumTitles": ["Latest first", "Top engagement"],
@@ -56,6 +57,7 @@
     "author_filter": {
       "title": "Author-feed filter",
       "type": "string",
+      "description": "Which posts to include when scraping an author's feed (mode='author_feed').",
       "editor": "select",
       "enum": [
         "posts_with_replies",
@@ -82,6 +84,7 @@
     "max_items_per_actor": {
       "title": "Max posts per actor (author_feed mode)",
       "type": "integer",
+      "description": "Per-actor cap when scraping multiple Bluesky handles. Total run is still bounded by max_items.",
       "default": 100,
       "minimum": 1,
       "maximum": 5000
@@ -102,6 +105,7 @@
     "claude_model": {
       "title": "Claude model",
       "type": "string",
+      "description": "Anthropic model to use for enrichment. Haiku is cheapest; Opus is most accurate.",
       "editor": "select",
       "enum": ["claude-haiku-4-5", "claude-sonnet-4-6", "claude-opus-4-7"],
       "enumTitles": [
